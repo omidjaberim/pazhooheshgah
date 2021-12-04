@@ -89,9 +89,7 @@ const Drawer = styled(SwipeableDrawer, { shouldForwardProp: (prop) => prop !== '
     position:"absolute",
     ...(open && {
       ...openedMixin(theme),
-      '& .MuiDrawer-paper': openedMixin(theme),
-      zIndex:999,
-      
+      '& .MuiDrawer-paper': openedMixin(theme),      
     }),
     ...(!open && {
       ...closedMixin(theme),
@@ -99,7 +97,15 @@ const Drawer = styled(SwipeableDrawer, { shouldForwardProp: (prop) => prop !== '
     }),
   }),
 );
+window.onscroll = function() {scrollFunction()};
 
+function scrollFunction() {
+  if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+    document.getElementById("headertxt").style.display = "none";
+  } else {
+    document.getElementById("headertxt").style.display = "block";
+  }
+}
 export default function MiniDrawer(props) {
   const {children, pageTitle} = props;
   const theme = useTheme();
@@ -130,11 +136,12 @@ export default function MiniDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Grid container justifyContent="space-between" alignItems="center" >  
-            
-            <Typography variant="body1" noWrap component="div" color="gray" >
+          <Grid container justifyContent="space-between" alignItems="center" >              
+            <Grid>
+            <Typography variant="body1" noWrap component="div" color="black" id="headertxt" >
               {pageTitle}
             </Typography>
+            </Grid>
             <Stack spacing={3} direction="row" alignItems="center" >
               <Badge badgeContent={4} color="error">
                 <Notification color="action" fontSize="medium" />
@@ -149,7 +156,7 @@ export default function MiniDrawer(props) {
           <div style={{width:300,paddingInlineStart:60}}  >
           {
             open && (
-            <img src={Logo} style={{width:80}} />
+            <img src={Logo} style={{width:80}} alt="ja" />
           )
           }
           </div>
@@ -178,6 +185,7 @@ export default function MiniDrawer(props) {
               <ListItemText primary="محاسبه خط مبنا" />
               </ListItem>
           </CustomLink>
+          <CustomLink  to="/expenseRate">
             <ListItem button key="mizanemasraf">
               <ListItemIcon>
                 <Tooltip title="میزان مصرف">
@@ -186,6 +194,8 @@ export default function MiniDrawer(props) {
               </ListItemIcon>
               <ListItemText primary="میزان مصرف" />
             </ListItem>
+          </CustomLink>  
+          <CustomLink  to="/bill">
             <ListItem button key="mohasebateMali">
               <ListItemIcon>
                 <Tooltip title="محاسبات مالی">
@@ -194,38 +204,47 @@ export default function MiniDrawer(props) {
               </ListItemIcon>
               <ListItemText primary="محاسبات مالی" />
             </ListItem>
+           </CustomLink> 
+           <CustomLink  to="/objections">
             <ListItem button key="eterazat">
               <ListItemIcon>
-                <Tooltip title="اعتراضات">
-                  <GavelOutlinedIcon />
-                </Tooltip>
-              </ListItemIcon>
-              <ListItemText primary="اعتراضات" />
-            </ListItem>
-            <ListItem button key="elanat">
-              <ListItemIcon>
-                <Tooltip title="اعلانات">
-                  <CampaignOutlinedIcon />
-                </Tooltip>
-              </ListItemIcon>
-              <ListItemText primary="اعلانات" />
-            </ListItem>
-            <ListItem button key="dadehayeKham">
-              <ListItemIcon>
-                <Tooltip title="داده‌های‌خام">
-                  <FeedOutlinedIcon />
-                </Tooltip>
-              </ListItemIcon>
-              <ListItemText primary="داده‌های‌خام" />
-            </ListItem>
-            <ListItem button key="setting">
-              <ListItemIcon>
-                <Tooltip title="تنظیمات">
-                  <SettingsOutlinedIcon />
-                </Tooltip>  
-              </ListItemIcon>
-              <ListItemText primary="تنظیمات" />
-            </ListItem>
+                  <Tooltip title="اعتراضات">
+                    <GavelOutlinedIcon />
+                  </Tooltip>
+                </ListItemIcon>
+                <ListItemText primary="اعتراضات" />
+              </ListItem>
+            </CustomLink>
+            <CustomLink  to="/announcements">
+              <ListItem button key="elanat">
+                <ListItemIcon>
+                  <Tooltip title="اعلانات">
+                    <CampaignOutlinedIcon />
+                  </Tooltip>
+                </ListItemIcon>
+                <ListItemText primary="اعلانات" />
+              </ListItem>
+            </CustomLink>
+            <CustomLink  to="/raw-data">
+              <ListItem button key="dadehayeKham">
+                <ListItemIcon>
+                  <Tooltip title="داده‌های‌خام">
+                    <FeedOutlinedIcon />
+                  </Tooltip>
+                </ListItemIcon>
+                <ListItemText primary="داده‌های‌خام" />
+              </ListItem>
+            </CustomLink>
+            <CustomLink  to="/settings">
+              <ListItem button key="setting">
+                <ListItemIcon>
+                  <Tooltip title="تنظیمات">
+                    <SettingsOutlinedIcon />
+                  </Tooltip>  
+                </ListItemIcon>
+                <ListItemText primary="تنظیمات" />
+              </ListItem>
+            </CustomLink>
         </List>       
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3,marginTop:8,background:'rgb(248,249,249,0.3)' }}>        
